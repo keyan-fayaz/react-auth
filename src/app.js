@@ -1,38 +1,49 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Router, Route, Switch } from "react-router-dom";
+import { Container } from "reactstrap";
 
-import { NavBar, Footer, Loading } from "./components";
-import { Home, Profile, ExternalApi } from "./views";
-import { withAuth0 } from "@auth0/auth0-react";
-import ProtectedRoute from "./auth/protected-route";
+import Loading from "./components/Loading";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+import Home from "./views/Home";
+import Profile from "./views/Profile";
+import ExternalApi from "./views/ExternalApi";
+import { useAuth0 } from "@auth0/auth0-react";
+import history from "./utils/history";
 
-import "./app.css";
+// styles
+import "./App.css";
 
-class App extends React.Component {
-  render() {
-    const { isLoading } = this.props.auth0;
+// fontawesome
+import initFontAwesome from "./utils/initFontAwesome";
+initFontAwesome();
 
-    if (isLoading) {
-      return <Loading />;
-    }
+const App = () => {
+  const { isLoading, error } = useAuth0();
 
-    return (
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
+    <Router history={history}>
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
-        <div className="container flex-grow-1">
-          <div className="mt-5">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <ProtectedRoute path="/profile" component={Profile} />
-              <ProtectedRoute path="/external-api" component={ExternalApi} />
-            </Switch>
-          </div>
-        </div>
+        <Container className="flex-grow-1 mt-5">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/external-api" component={ExternalApi} />
+          </Switch>
+        </Container>
         <Footer />
       </div>
-    );
-  }
-}
+    </Router>
+  );
+};
 
-export default withAuth0(App);
+export default App;
