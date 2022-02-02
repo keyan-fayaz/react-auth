@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { Hero, Content } from "../components";
+import { Hero } from "../components";
 
 class Home extends React.Component {
   render() {
@@ -8,7 +8,7 @@ class Home extends React.Component {
       <Fragment>
         <Hero />
         <hr />
-        <Content />
+        {/* <Content /> */}
       </Fragment>
     );
   }

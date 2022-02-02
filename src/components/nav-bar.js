@@ -1,11 +1,8 @@
 import React from "react";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from "./logout-button";
-import LoginButton from "./login-button";
-
 import AuthNav from "./auth-nav";
+import ProfileHelper from "./ProfileHelper";
 
 const MainNav = () => (
   <Nav className="mr-auto">
@@ -15,24 +12,9 @@ const MainNav = () => (
       exact
       activeClassName="router-link-exact-active"
     >
-      Home
+      Welcome to ERA
     </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/profile"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Profile
-    </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/external-api"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      External API
-    </Nav.Link>
+    {/* <ProfileHelper /> */}
   </Nav>
 );
 
@@ -40,7 +22,7 @@ const NavBar = () => {
   return (
     <Navbar bg="light" expand="md">
       <Container>
-        <Navbar.Brand as={RouterNavLink} className="logo" to="/" />
+        {/* <Navbar.Brand as={RouterNavLink} className="logo" to="/" /> */}
         <MainNav />
         <AuthNav />
       </Container>
